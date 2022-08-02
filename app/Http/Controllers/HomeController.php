@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.user.index');
+        if (auth()->user()->hasRole('admin')) {
+            return view('dashboard.user.index');
+        } else {
+            dd("no tiene permisos");
+        }
     }
 }

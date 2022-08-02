@@ -1,7 +1,66 @@
+
+
+function registro() {
+    cedula = document.getElementById('cedula').value;
+    nombre = document.getElementById('nombre').value;
+    ciudad = document.getElementById('ciudad').value;
+    contacto = document.getElementById('contacto').value;
+
+    var url = $("#datosRegistro").attr("action");
+    var parametros = { cedula: cedula, nombre: nombre, ciudad: ciudad, contacto: contacto };
+
+    if (cedula == "" || nombre == "" || contacto == "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Porfavor complete los campos',
+            confirmButtonColor: '#2a6db3'
+        })
+    } else {
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            method: "POST",
+            url: url,
+            data: parametros,
+            success: function (task) {
+                if (task["response"]) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: task["message"],
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000)
+                } else {
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: task["message"],
+                        confirmButtonColor: '#2a6db3'
+                    })
+                }
+            },
+            error: function (r) {
+                r.responseText;
+                console.log(r);
+                alert("Error del servidor");
+            }
+        });
+    }
+}
+
+/* 
+
 const URLD = "http://localhost/club/";
 
 function verificarDatos(e) {
-    e.preventDefault();
+    e.preventDefault();v
     var documento = $('#documento').val();
     var password = $('#password').val();
     if (documento == "" || password == "") {
@@ -33,56 +92,7 @@ function verificarDatos(e) {
 
 }
 
-function registro() {
-    cedula = document.getElementById('cedula').value;
-    nombre = document.getElementById('nombre').value;
-    ciudad = document.getElementById('ciudad').value;
-    contacto = document.getElementById('contacto').value;
-    console.log(contacto);
 
-    if (cedula == "" || nombre == "" || contacto == "") {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Oops...',
-            text: 'Porfavor complete los campos',
-            confirmButtonColor: '#2a6db3'
-        })
-    } else {
-        $.ajax({
-            type: "POST",
-            url: URLD + "registroControl/registrog",
-            data: $('#datosRegistro').serialize(),
-            success: function (data) {
-                var task = JSON.parse(data);
-                console.log(task);
-                if (task) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Invitado Registrado',
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
-                    setTimeout(function () {
-                        location.reload();
-                    }, 2000)
-                } else {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Oops...',
-                        text: 'El usuario ya esta registrado',
-                        confirmButtonColor: '#2a6db3'
-                    })
-                }
-            },
-            error: function (r) {
-                r.responseText;
-                console.log(r);
-                alert("Error del servidor");
-            }
-        });
-    }
-}
 
 function presentacion(){
     codigo = document.getElementById('codigoi').value;
@@ -105,7 +115,7 @@ function presentacion(){
             data: $('#datosPresentacion').serialize(),
             success: function (data) {
                 /* console.log(data);
-                return; */
+                return; 
                 var task = JSON.parse(data);
                 console.log(task);
                 if(task[0]){
@@ -205,7 +215,7 @@ function ausente(){
             data: $('#datosAusente').serialize(),
             success: function (data) {
                 /* console.log(data);
-                return; */
+                return; 
                 var task = JSON.parse(data);
                 console.log(task);
                 if(task[0]){
@@ -246,4 +256,4 @@ function httpRequest(url, callback) {
             callback.apply(http);
         }
     }
-}
+} */

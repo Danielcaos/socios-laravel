@@ -46,7 +46,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('/js/sb-admin-2.min.js') }}"></script>
-    <script src="{{ asset('/js/config.js') }}"></script>
+    <script src="{{ asset('/js/admin/config.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

@@ -17,10 +17,12 @@
                     <hr>
                     <div class="card shadow align-items-center justify-content-between mb-4">
                         <div class="card-body" style="width: 50%;">
-                            <form class="user" action="registroControl/registrog" method="post" id="datosRegistro">
+                            <form class="user" action="{{ route('registro.user') }}" method="post" id="datosRegistro">
+                                @csrf
+                                
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" class="form-control form-control-user" id="cedula" name="cedula"
+                                        <input type="number" max="10" class="form-control form-control-user" id="cedula" name="cedula"
                                             placeholder="Cedula" onkeyup="javascript:this.value=this.value.toUpperCase();">
                                     </div>
                                     <div class="col-sm-6">

@@ -41,48 +41,45 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $this->validateLogin($request);
         return $this->sendLoginResponse($request);
     }
 
-    protected function validateLogin(Request $request){
+    protected function validateLogin(Request $request)
+    {
 
-            $request->validate([
-                'documento' => 'required|integer',
-                'contraseña' => 'required',
-            ]);
-
+        $request->validate([
+            'documento' => 'required|integer',
+            'contraseña' => 'required',
+        ]);
     }
 
-    public function sendLoginResponse(Request $request){
+    public function sendLoginResponse(Request $request)
+    {
 
         $errors = null;
 
-            /* $user = User::where('documento',$request['documento'])
-                ->where('password', Hash::check($request['contraseña']))
-                ->get(); */
+        $user = User::where('documento', $request['documento'])->first();
 
-                $user = User::where('documento', $request['documento'])->first();
-                
 
-                if(!empty($user)){
-                    $errors = 'La contraseña ingresada no es correcta';
-                    if(Hash::check($request['contraseña'], $user->password)){
-                        $this->guard()->login($user);
-                    return redirect('/dashboard');    
-                    }else{
-                        return view('auth.login')->with('data',$errors);
-                    }
-                }else{
-                    return redirect()->back();
-                }
-        
+        if (!empty($user)) {
+            $errors = 'La contraseña ingresada no es correcta';
+            if (Hash::check($request['contraseña'], $user->password)) {
+                $this->guard()->login($user);
+                return redirect('/home');
+            } else {
+                return view('auth.login')->with('data', $errors);
+            }
+        } else {
+            return redirect()->back();
+        }
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $this->guard()->logout();
         return $this->loggedOut($request) ?: redirect('/');
-
     }
 }

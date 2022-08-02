@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Excel;
-use App\Http\Models\Socio;
 use App\Models\Invitado;
+use Illuminate\Http\Request;
+use App\Services\ExcelService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-        /**
+
+    protected $excelService;
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -17,6 +20,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->excelService = new ExcelService();
     }
 
     /**
@@ -30,46 +34,69 @@ class UserController extends Controller
         return view('dashboard.user.index', compact('invitados'));
     }
 
-    public function registro()
+    public function index_registro()
     {
         return view('dashboard.user.registro');
     }
 
-    public function presentacion()
+    public function index_presentacion()
     {
         return view('dashboard.user.presentacion');
     }
 
-    public function ausente()
+    public function index_ausente()
     {
         return view('dashboard.user.ausente');
     }
 
-    public function excel()
+    public function index_excel()
     {
         return view('dashboard.user.excel');
     }
 
-    /* public function importar(Request $request)
+    public function registro(Request $request)
     {
-        if($request->is_file('documento')){
-            $path = $request->file('documento')->getRealPath();
-            $datos = Excel::load($path, function($reader){
-            })->get();
+        $validator = Validator::make($request->all(), [
+            'cedula' => 'required|max:10',
+            'ciudad' => 'required',
+            'nombre' => 'required',
+            'contacto' => 'required',
+        ]);
 
-            if(!empty($datos) && $datos->count()){
-                $datos->toArray();
-                for($i=0; i< count($datos); $i++){
-                    $datosImportar[] = $datos[$i];
-                }
+        $error = $this->send_error($validator);
+        if (!empty($error)) return $error;
+
+
+        $inputs = $request->all();
+        return Invitado::register($inputs);
+
+    }
+
+    public function importar(Request $request)
+    {
+        $request->validate([
+            'documento' => 'required|file|mimes:xlsx,csv,xls',
+        ]);
+
+        $file = $request->input('documento');
+
+        return $this->excelService->importSocios($file);
+    }
+
+    public function send_error($validator)
+    {
+        if ($validator->fails()) {
+            $temp_val = "";
+            $temp_errors = "";
+            $error = $validator->getMessageBag()->toArray();
+            foreach ($error as $key => $value) {
+                $temp_errors = implode(",", $value);
+                $temp_val .= $temp_errors . "\n";
             }
-
-            Socios::insert($datosImportar);
-
+            return [
+                'success' => false,
+                'message' =>  $temp_val,
+            ];
         }
-
-        return back();
-
-    } */
-
+    }
 }

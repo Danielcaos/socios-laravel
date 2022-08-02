@@ -18,21 +18,18 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-/* redireccionamiento al dash */
-Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'index'])->name('dashboard');
 
-/* redireccionamiento a registro */
-Route::get('dashboard/registro', [App\Http\Controllers\UserController::class, 'registro'])->name('registro');
+Route::group(['prefix' => 'administrador/', 'middleware' => ['role:admin', 'auth']], function () {
 
-/* redireccionamiento a presentacion */
-Route::get('dashboard/presentacion', [App\Http\Controllers\UserController::class, 'presentacion'])->name('presentacion');
+    Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'index'])->name('dashboard');
+    Route::get('dashboard/registro', [App\Http\Controllers\UserController::class, 'index_registro'])->name('registro');
+    Route::get('dashboard/presentacion', [App\Http\Controllers\UserController::class, 'index_presentacion'])->name('presentacion');
+    Route::get('dashboard/ausente', [App\Http\Controllers\UserController::class, 'index_ausente'])->name('ausente');
+    Route::get('dashboard/excel', [App\Http\Controllers\UserController::class, 'index_excel'])->name('excel');
 
-/* redireccionamiento a presentacion */
-Route::get('dashboard/ausente', [App\Http\Controllers\UserController::class, 'ausente'])->name('ausente');
 
-Route::get('dashboard/excel', [App\Http\Controllers\UserController::class, 'excel'])->name('excel');
-
-Route::post('dashboard/excel/importar', [App\Http\Controllers\UserController::class, 'importar'])->name('importar');
+    Route::post('dashboard/excel/importar', [App\Http\Controllers\UserController::class, 'importar'])->name('importar.excel');
+    Route::post('dashboard/registro', [App\Http\Controllers\UserController::class, 'registro'])->name('registro.user');
+});

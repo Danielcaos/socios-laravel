@@ -16,7 +16,7 @@
                     <hr>
                     <div class="card shadow align-items-center justify-content-between mb-4">
                         <div class="card-body" style="width: 50%;">
-                            <form class="user" action="registroControl/registrog" method="post" id="datosRegistro">
+                            <form class="user" action="{{ route('importar.excel') }}" method="post" id="datosRegistro" enctype="multipart/form-data">
                             @csrf
                                 <div>
                                     <input class="form-control form-control-lg" type="file" name="documento">
@@ -26,6 +26,15 @@
                                     Importar
                                 </button>
                             </form>
+                            @if ($errors->any())
+                                <div class="alert alert-danger" style="margin-top:10px">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <!-- AQUI TODO EL CONTENIDO DEL INICIO -->
