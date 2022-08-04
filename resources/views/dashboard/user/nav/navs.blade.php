@@ -21,7 +21,6 @@
 
 <hr class="sidebar-divider my-0">
 
-<!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
         aria-expanded="true" aria-controls="collapseTwo">
@@ -32,7 +31,6 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('registro')}}">Registro</a>
             <a class="collapse-item" href="{{route('presentacion')}}">Presentacion</a>
-            <a class="collapse-item" href="{{route('excel')}}">Excel</a>
         </div>
     </div>
 </li>

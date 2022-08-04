@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -43,4 +44,41 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function register($request)
+    {
+        
+        $temp_usuario = User::where('documento', $request["cedula"])->get()->first();
+
+        if (empty($temp_invitado)) {
+
+            try {
+                $user = User::create([
+                    "documento" => $request["cedula"],
+                    "name" => $request["nombre"],
+                    "email" => $request["email"],
+                    "password" => Hash::make($request["contraseña"]),
+                ]);
+
+                $user->assignRole('user');
+
+                return [
+                    'response' => true,
+                    'message' =>  'Usuario agregado.'
+                ];
+
+            } catch (\Exception $e) {
+                Log::error(" Model/User->register " . " " . $e->getMessage());
+                return [
+                    'response' => false,
+                    'message' =>  'Ah ocurrido un error.'
+                ];
+            }
+        }
+
+        return [
+            'response' => false,
+            'message' =>  'El numero de cedula ya esta registrado.'
+        ];
+    }
 }

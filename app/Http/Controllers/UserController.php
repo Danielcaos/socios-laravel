@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Invitado;
 use Illuminate\Http\Request;
-use App\Services\ExcelService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-
-    protected $excelService;
-    /**
+        /**
      * Create a new controller instance.
      *
      * @return void
@@ -20,14 +17,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->excelService = new ExcelService();
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $invitados = Invitado::all();
@@ -49,11 +40,6 @@ class UserController extends Controller
         return view('dashboard.user.ausente');
     }
 
-    public function index_excel()
-    {
-        return view('dashboard.user.excel');
-    }
-
     public function registro(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -72,17 +58,6 @@ class UserController extends Controller
 
     }
 
-    public function importar(Request $request)
-    {
-        $request->validate([
-            'documento' => 'required|file|mimes:xlsx,csv,xls',
-        ]);
-
-        $file = $request->input('documento');
-
-        return $this->excelService->importSocios($file);
-    }
-
     public function send_error($validator)
     {
         if ($validator->fails()) {
@@ -99,4 +74,6 @@ class UserController extends Controller
             ];
         }
     }
+
+    
 }

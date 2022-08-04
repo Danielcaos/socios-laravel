@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.adminDash')
 
 @section('content')
 <body id="page-top">
@@ -7,14 +7,15 @@
     <div id="wrapper">
 
                 <!-- Sidebar -->
-                @include('dashboard.user.nav.navs')
+                @include('dashboard.admin.nav.navs')
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                 <h1 class="h3 mb-0 text-gray-800">Cargar Socios</h1>
                     <hr>
-                    <div class="card shadow align-items-center justify-content-between mb-4">
+                    <div class="card shadow align-items-center justify-content-between mb-4 py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Carga Masiva</h6>
                         <div class="card-body" style="width: 50%;">
                             <form class="user" action="{{ route('importar.excel') }}" method="post" id="datosRegistro" enctype="multipart/form-data">
                             @csrf
@@ -37,6 +38,29 @@
                             @endif
                         </div>
                     </div>
+
+                    <hr>
+                    <div class="card shadow align-items-center justify-content-between mb-4 py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Carga Parcial</h6>
+                        <div class="card-body" style="width: 50%;">
+                            <form class="user" action="{{ route('registro.user') }}" method="post" id="datosRegistro">
+                                @csrf
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="number" max="10" class="form-control form-control-user" id="codigo" name="codigo"
+                                            placeholder="Codigo" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="nombre" name="nombre"
+                                            placeholder="Nombre" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                    </div>
+                                </div>
+                                <button type="button" onclick="return registro_socio()" class="btn btn-primary btn-user btn-block">
+                                    Guardar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                     <!-- AQUI TODO EL CONTENIDO DEL INICIO -->
 
                 </div>
@@ -46,7 +70,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('dashboard.user.nav.navi')
+            @include('dashboard.admin.nav.navi')
 
         </div>
         <!-- End of Content Wrapper -->

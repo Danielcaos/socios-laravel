@@ -3,13 +3,13 @@
 function registro() {
     cedula = document.getElementById('cedula').value;
     nombre = document.getElementById('nombre').value;
-    ciudad = document.getElementById('ciudad').value;
-    contacto = document.getElementById('contacto').value;
+    email = document.getElementById('email').value;
+    contraseña = document.getElementById('contraseña').value;
 
-    var url = $("#datosRegistro").attr("action");
-    var parametros = { cedula: cedula, nombre: nombre, ciudad: ciudad, contacto: contacto };
+    var url = $("#registroUsuario").attr("action");
+    var parametros = { cedula: cedula, nombre: nombre, email: email, contraseña: contraseña };
 
-    if (cedula == "" || nombre == "" || contacto == "") {
+    if (cedula == "" || nombre == "" || email == "" || cedula == "") {
         Swal.fire({
             icon: 'warning',
             title: 'Oops...',

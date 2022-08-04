@@ -1,4 +1,4 @@
-@extends('layouts.userDash')
+@extends('layouts.adminDash')
 
 @section('content')
 <body id="page-top">
@@ -7,32 +7,41 @@
     <div id="wrapper">
 
                 <!-- Sidebar -->
-                @include('dashboard.user.nav.navs')
+                @include('dashboard.admin.nav.navs')
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <h1 class="h3 mb-0 text-gray-800">Registrar Ausente</h1>
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-0 text-gray-800">Registrar Usuarios</h1>
                     <hr>
                     <div class="card shadow align-items-center justify-content-between mb-4">
                         <div class="card-body" style="width: 50%;">
-                            <form class="user" id="datosAusente">
+                            <form class="user" action="{{ route('registro.admin') }}" method="post" id="registroUsuario">
+                                @csrf
+                                
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" class="form-control form-control-user" id="codigo" name="codigo"
-                                            placeholder="Codigo socio" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                        <input type="number" max="10" class="form-control form-control-user" id="cedula" name="cedula"
+                                            placeholder="Cedula" onkeyup="javascript:this.value=this.value.toUpperCase();">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control form-control-user" id="dias" name="dias"
-                                            placeholder="Dias">
+                                        <input type="text" class="form-control form-control-user" id="nombre" name="nombre"
+                                            placeholder="Nombre" onkeyup="javascript:this.value=this.value.toUpperCase();">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="date" class="form-control form-control-user" id="fecha" name="fecha"
-                                        placeholder="Fecha">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="email" class="form-control form-control-user" id="email" name="email"
+                                            placeholder="Email" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="contraseña" name="contraseña"
+                                            placeholder="Contraseña">
+                                    </div>
                                 </div>
-                                <button type="button" onclick="return ausente()" class="btn btn-primary btn-user btn-block">
-                                    Guardar
+                                <button type="button" onclick="return registro()" class="btn btn-primary btn-user btn-block">
+                                    Registrar
                                 </button>
                             </form>
                         </div>
@@ -47,7 +56,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('dashboard.user.nav.navi')
+            @include('dashboard.admin.nav.navi')
 
         </div>
         <!-- End of Content Wrapper -->
@@ -79,5 +88,6 @@
             </div>
         </div>
     </div>
+
 </body>
 @endsection

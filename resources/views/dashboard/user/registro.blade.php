@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.userDash')
 
 @section('content')
 <body id="page-top">

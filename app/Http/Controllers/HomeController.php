@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invitado;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,8 +25,12 @@ class HomeController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('admin')) {
-            return view('dashboard.user.index');
-        } else {
+            return view('dashboard.admin.index');
+        } else 
+        if (auth()->user()->hasRole('user')) {
+            $invitados = Invitado::all();
+            return view('dashboard.user.index', compact('invitados'));
+        }else{
             dd("no tiene permisos");
         }
     }
