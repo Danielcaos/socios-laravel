@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('admin')) {
-            return view('dashboard.admin.index');
+            return view('dashboard.admin.index', compact('usuarios'));
         } else 
         if (auth()->user()->hasRole('user')) {
             $invitados = Invitado::all();

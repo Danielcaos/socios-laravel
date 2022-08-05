@@ -31,8 +31,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $invitados = Invitado::all();
-        return view('dashboard.admin.index', compact('invitados'));
+        $usuarios = User::all();
+        return view('dashboard.admin.index', compact('usuarios'));
     }
 
     public function index_usuario()

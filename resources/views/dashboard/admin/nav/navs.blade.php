@@ -14,7 +14,7 @@
 
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
-    <a class="nav-link" href="{{route('dashboard')}}">
+    <a class="nav-link" href="{{route('inicio')}}">
         <i class="fas fa-solid fa-house-user"></i>
         <span>Inicio</span></a>
 </li>
@@ -35,21 +35,6 @@
         </div>
     </div>
 </li>
-
-<!-- <hr class="sidebar-divider my-0">
-
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fas fa-solid fa-user-check"></i>
-        <span>Control de Ausente</span>
-    </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{route('ausente')}}">Ingreso</a>
-        </div>
-    </div>
-</li> -->
 
 <!-- Divider -->
 <hr class="sidebar-divider">

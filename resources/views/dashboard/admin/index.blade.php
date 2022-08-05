@@ -26,26 +26,23 @@
                                         <tr>
                                             <th>Cedula</th>
                                             <th>Nombre</th>
-                                            <th>Ciudad</th>
-                                            <th>Celular</th>
+                                            <th>Email</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Cedula</th>
                                             <th>Nombre</th>
-                                            <th>Ciudad</th>
-                                            <th>Celular</th>
+                                            <th>Email</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                    @isset($invitados)
-                                    @for($m = 0; $m < count($invitados); $m++)
+                                    @isset($usuarios)
+                                    @for($m = 0; $m < count($usuarios); $m++)
                                         <tr>
-                                            <td>{{$invitados[$m]->cedula}}</td>
-                                            <td>{{$invitados[$m]->nombre}}</td>
-                                            <td>{{$invitados[$m]->ciudad}}</td>
-                                            <td>{{$invitados[$m]->celular}}</td>
+                                            <td>{{$usuarios[$m]->documento}}</td>
+                                            <td>{{$usuarios[$m]->name}}</td>
+                                            <td>{{$usuarios[$m]->email}}</td>
                                         </tr>
                                     @endfor
                                     @endisset

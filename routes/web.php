@@ -23,7 +23,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['prefix' => 'administrador/', 'middleware' => ['role:admin', 'auth']], function () {
 
-    Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
+    Route::get('/inicio', [App\Http\Controllers\AdminController::class, 'index'])->name('inicio');
+
     Route::get('dashboard/excel', [App\Http\Controllers\AdminController::class, 'index_excel'])->name('excel');
     Route::get('dashboard/usuario', [App\Http\Controllers\AdminController::class, 'index_usuario'])->name('usuario');
 
