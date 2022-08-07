@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Socio extends Model
 {
 
-    protected $table = 'socio';
+    protected $table = 'socios';
 
     protected $fillable = [
         'codigo',

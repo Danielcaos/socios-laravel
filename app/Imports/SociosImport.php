@@ -2,24 +2,42 @@
 
 namespace App\Imports;
 
-use App\Models\User;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use App\Models\Socio;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 
-class SociosImport implements ToCollection, WithHeadingRow
+
+class SociosImport implements ToModel, WithValidation, WithHeadingRow
 {
-    public function collection(Collection $rows)
+    use RemembersRowNumber;
+
+    public function model(array $row)
     {
-        foreach ($rows as $row) {
-            User::create([
-                'name' => $row[0],
-            ]);
-        }
+
+        $currentRowNumber = $this->getRowNumber();
+        
+        return new Socio([
+            'cedula' => $currentRowNumber,
+            'nombre'  => $row['nombre'],
+            'codigo' => $row['codigo'],
+        ]);
+
+      
     }
 
     public function headingRow(): int
     {
-        return 2;
+        return 1;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'codigo' => 'required|unique:socios,codigo',
+            'nombre' => 'required',
+        ];
     }
 }

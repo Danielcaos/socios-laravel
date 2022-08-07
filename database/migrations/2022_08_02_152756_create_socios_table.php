@@ -17,7 +17,7 @@ class CreateSociosTable extends Migration
             $table->id();
             $table->integer('cedula')->unique();
             $table->string('nombre');
-            $table->string('celular');
+            $table->string('codigo');
             $table->timestamps();
         });
     }

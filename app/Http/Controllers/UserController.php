@@ -30,11 +30,6 @@ class UserController extends Controller
         return view('dashboard.user.registro');
     }
 
-    public function index_presentacion()
-    {
-        return view('dashboard.user.presentacion');
-    }
-
     public function index_ausente()
     {
         return view('dashboard.user.ausente');

@@ -16,29 +16,51 @@
                     <hr>
                     <div class="card shadow align-items-center justify-content-between mb-4">
                         <div class="card-body" style="width: 50%;">
-                            <form class="user" id="datosPresentacion">
+                            <form class="user" action="{{ route('registro.presentacion') }}" method="post" id="datosInvitado">
+                                @csrf
+
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" class="form-control form-control-user" id="cedulai" name="cedulai"
-                                            placeholder="Cedula invitado" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                        <input type="text"  class="form-control form-control-user {{ $errors->has('cedula') ? ' is-invalid' : '' }}"
+                                         value="{{ old('cedula') }}" id="cedula" name="cedula"  placeholder="Cedula invitado" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                        @if ($errors->has('cedula'))
+                                            <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('cedula') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="codigoi" name="codigoi"
-                                            placeholder="Codigo socio" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                        <input type="text"  class="form-control form-control-user {{ $errors->has('codigo') ? ' is-invalid' : '' }}"
+                                         value="{{ old('codigo') }}" id="codigo" name="codigo"  placeholder="Codigo socio" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                        @if ($errors->has('codigo'))
+                                            <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('codigo') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="date" class="form-control form-control-user" id="fechai" name="fechai"
-                                            placeholder="Fecha">
+                                        <input type="date" class="form-control form-control-user {{ $errors->has('fecha') ? ' is-invalid' : '' }}"
+                                        value="{{ old('fecha') }}" id="fecha" name="fecha"  placeholder="Fecha">
+                                        @if ($errors->has('fecha'))
+                                            <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('fecha') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control form-control-user" id="diasi" name="diasi"
-                                            placeholder="Dias">
+                                        <input type="number" class="form-control form-control-user {{ $errors->has('dias') ? ' is-invalid' : '' }}"
+                                        value="{{ old('dias') }}" id="dias" name="dias" placeholder="Dias">
+                                        @if ($errors->has('dias'))
+                                            <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('dias') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
-                                <input type="hidden" class="form-control form-control-user" id="tipoi" name="tipoi" value="PRESENTACION">
-                                <button type="button" onclick="return presentacion()" class="btn btn-primary btn-user btn-block">
+                                <input type="hidden" class="form-control form-control-user" id="tipoi" name="tipo" value="PRESENTACION">
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Guardar
                                 </button>
                             </form>

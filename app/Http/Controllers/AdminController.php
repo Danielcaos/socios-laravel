@@ -51,7 +51,7 @@ class AdminController extends Controller
             'documento' => 'required|file|mimes:xlsx,csv,xls',
         ]);
 
-        $file = $request->input('documento');
+        $file = $request->file('documento');
 
         return $this->excelService->importSocios($file);
     }

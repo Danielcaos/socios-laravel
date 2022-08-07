@@ -29,11 +29,14 @@
     <link href="{{ asset('/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('/css/number.css') }}" rel="stylesheet">
+
+    
 </head>
 <body>
     <div id="app">
         <main>
             @yield('content')
+            @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
         </main>
     </div>
     <!-- Bootstrap core JavaScript-->

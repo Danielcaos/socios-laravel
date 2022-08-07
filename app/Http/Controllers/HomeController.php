@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Models\Invitado;
 use Illuminate\Http\Request;
 
@@ -30,8 +31,10 @@ class HomeController extends Controller
         if (auth()->user()->hasRole('user')) {
             $invitados = Invitado::all();
             return view('dashboard.user.index', compact('invitados'));
-        }else{
+        } else {
             dd("no tiene permisos");
         }
     }
+
+    
 }
