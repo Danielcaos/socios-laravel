@@ -59,7 +59,7 @@ class PresentacionController extends Controller
             ->where('socio', $temp_socio->id,)
             ->first();
 
-        if (!empty($temp_presentacion)) {
+        /* if (!empty($temp_presentacion)) {
 
             $fechaIni = date('Y-m-01');
             $fechaFin  = date("Y-m-t", strtotime($fechaIni));
@@ -67,49 +67,112 @@ class PresentacionController extends Controller
             dd($days);
 
 
-            /***
-             * $response = Presentacion::select('*')
-             *  ->where('invitado', $temp_invitado->id)
-             *  ->where('tipo', "PRESENTACION")
-                ->whereBetween('fecha', [$fechaIni, $fechaFin])
-                ->get();
+            
+            $response = Presentacion::select('*')
+            ->where('invitado', $temp_invitado->id)
+            ->where('tipo', "PRESENTACION")
+            ->whereBetween('fecha', [$fechaIni, $fechaFin])
+            ->get();
 
-                $response = count($response);
-             * 
-             * 
-             * 
-             */
-
+            $response = count($response);
+            
+            if (($response+$dias)>$days) {
+                Alert::info($days-$response, 'Dias habiles de presentacion');
+            }
 
 
 
             Alert::info($limit[1], 'Restantes de su presentacion');
             return redirect()->back()->withInput();
             #self::funcc(parm1, parm2...);
-        }
+        } */
 
-        DB::beginTransaction();
+        $days = (in_array($temp_invitado->ciudad, $this->list_citys)) ? 2 : 60;
+        
+        if($days == 2){
+            $fechaIni = date('Y-m-01');
+            $fechaFin  = date("Y-m-t", strtotime($fechaIni));
 
-        try {
-            for ($i = 0; $i < $dias; $i++) {
-                Presentacion::create([
-                    'usuario' => auth()->user()->id,
-                    'invitado' => $temp_invitado->id,
-                    'socio' => $temp_socio->id,
-                    'fecha' => $fecha,
-                    'dia' => 1,
-                    'tipo' =>  $tipo
-                ]);
+            $response = Presentacion::select('*')
+            ->where('invitado', $temp_invitado->id)
+            ->where('tipo', "PRESENTACION")
+            ->whereBetween('fecha', [$fechaIni, $fechaFin])
+            ->get();
+
+            if (($response+$dias)>$days) {
+                Alert::info($days-$response, 'Dias habiles de presentacion');
+            } else {
+                DB::beginTransaction();
+                $diasv = '1';
+                $aux = date ("Y-m-d", strtotime ("-1 days"));
+                $fechaReal = '';
+                try {
+                    for ($i = 0; $i < $dias; $i++) {
+                        date_add($aux, date_interval_create_from_date_string($diasv." days"));
+                        $fechaReal  = (string)date_format($aux,"Y-m-d");
+                        Presentacion::create([
+                            'usuario' => auth()->user()->id,
+                            'invitado' => $temp_invitado->id,
+                            'socio' => $temp_socio->id,
+                            'fecha' => $fechaReal,
+                            'dia' => $diasv,
+                            'tipo' =>  $tipo
+                        ]);
+                    }
+                    DB::commit();
+                    Alert::success('Presentacion Registrada', 'exito!');
+                    return back();
+                } catch (\Exception $e) {
+                    Log::info("PresentacionController/registro -> error" . $e->getMessage());
+                    DB::rollBack();
+                    toast('Ah ocurrido un problema!', 'error');
+                    return redirect()->back()->withInput();
+                }
             }
-            DB::commit();
-            Alert::success('Presentacion Registrada', 'exito!');
-            return back();
-        } catch (\Exception $e) {
-            Log::info("PresentacionController/registro -> error" . $e->getMessage());
-            DB::rollBack();
-            toast('Ah ocurrido un problema!', 'error');
-            return redirect()->back()->withInput();
+        } else {
+            $fechaIni = date('Y-01-01');
+            $fechaFin = date('Y-12-31');
+
+            $response = Presentacion::select('*')
+            ->where('invitado', $temp_invitado->id)
+            ->where('tipo', "PRESENTACION")
+            ->whereBetween('fecha', [$fechaIni, $fechaFin])
+            ->get();
+
+            if(($response+$dias)>$days){
+                Alert::info($days-$response, 'Dias habiles de presentacion');
+            } else {
+                DB::beginTransaction();
+                $diasv = '1';
+                $aux = date ("Y-m-d", strtotime ("-1 days"));
+                $fechaReal = '';
+                try {
+                    date("y-m-d",strtotime($fecha_actual."- 1 days"))
+                    for ($i = 0; $i < $dias; $i++) {
+                        date_add($aux, date_interval_create_from_date_string($diasv." days"));
+                        $fechaReal  = (string)date_format($aux,"Y-m-d");
+                        Presentacion::create([
+                            'usuario' => auth()->user()->id,
+                            'invitado' => $temp_invitado->id,
+                            'socio' => $temp_socio->id,
+                            'fecha' => $fechaReal,
+                            'dia' => $diasv,
+                            'tipo' =>  $tipo
+                        ]);
+                    }
+                    DB::commit();
+                    Alert::success('Presentacion Registrada', 'exito!');
+                    return back();
+                } catch (\Exception $e) {
+                    Log::info("PresentacionController/registro -> error" . $e->getMessage());
+                    DB::rollBack();
+                    toast('Ah ocurrido un problema!', 'error');
+                    return redirect()->back()->withInput();
+                }
+            }
         }
+
+        
     }
 
     function calc_limit($time, $limit)
