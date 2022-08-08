@@ -71,23 +71,39 @@
                     <hr>
                     <div class="card shadow align-items-center justify-content-between mb-4">
                         <div class="card-body" style="width: 50%;">
-                            <form class="user" id="datosAlimento">
+                            <form class="user" action="{{ route('registro.restaurante') }}" method="post" id="datosAlimento">
+                                @csrf
                                 <div class="form-group row">
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control form-control-user" id="cedulab" name="cedulab"
-                                            placeholder="Cedula invitado">
+                                        <input type="number" class="form-control form-control-user {{ $errors->has('cedula_invitado') ? ' is-invalid' : '' }}" id="cedula_invitado" name="cedula_invitado"
+                                        value="{{ old('cedula_invitado') }}" placeholder="Cedula invitado">
+                                        @if ($errors->has('cedula_invitado'))
+                                            <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('cedula_invitado') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" class="form-control form-control-user" id="codigob" name="codigob"
-                                            placeholder="Codigo socio">
+                                        <input type="number" class="form-control form-control-user {{ $errors->has('cedula_socio') ? ' is-invalid' : '' }}" id="cedula_socio" name="cedula_socio"
+                                        value="{{ old('cedula_socio') }}"  placeholder="Cedula invitado">
+                                        @if ($errors->has('cedula_socio'))
+                                            <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('cedula_socio') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="date" class="form-control form-control-user" id="fechab" name="fechab"
-                                        placeholder="Fecha">
+                                    <input type="date" class="form-control form-control-user {{ $errors->has('fecha_restaurante') ? ' is-invalid' : '' }}" id="fechab" name="fecha_restaurante"
+                                    value="{{ old('fecha_restaurante') }}" placeholder="Fecha">
+                                    @if ($errors->has('fecha_restaurante'))
+                                        <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('fecha_restaurante') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
-                                <input type="hidden" class="form-control form-control-user" id="tipob" name="tipob" value="ALIMENTO">
-                                <button type="button" onclick="return alimento()" class="btn btn-primary btn-user btn-block">
+                                <input type="hidden" class="form-control form-control-user" id="tipob" name="restaurante" value="ALIMENTO">
+                                <button type="submit"  class="btn btn-primary btn-user btn-block">
                                     Guardar
                                 </button>
                             </form>

@@ -41,5 +41,6 @@ Route::group(['prefix' => 'usuario/', 'middleware' => ['role:user', 'auth']], fu
 
     Route::post('dashboard/registro', [App\Http\Controllers\UserController::class, 'registro'])->name('registro.user');
     Route::post('dashboard/presentacion', [App\Http\Controllers\PresentacionController::class, 'registro'])->name('registro.presentacion');
+    Route::post('dashboard/restaurante', [App\Http\Controllers\PresentacionController::class, 'restaurante'])->name('registro.restaurante');
 
 });
