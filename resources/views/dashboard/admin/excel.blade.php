@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <hr>
+                    <!-- <hr>
                     <div class="card shadow align-items-center justify-content-between mb-4 py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Carga Parcial</h6>
                         <div class="card-body" style="width: 50%;">
@@ -60,7 +60,7 @@
                                 </button>
                             </form>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- AQUI TODO EL CONTENIDO DEL INICIO -->
 
                 </div>

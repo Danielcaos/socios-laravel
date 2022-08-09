@@ -30,11 +30,11 @@
                                         @endif
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text"  class="form-control form-control-user {{ $errors->has('codigo') ? ' is-invalid' : '' }}"
-                                         value="{{ old('codigo') }}" id="codigo" name="codigo"  placeholder="Codigo socio" onkeyup="javascript:this.value=this.value.toUpperCase();">
-                                        @if ($errors->has('codigo'))
+                                        <input type="text"  class="form-control form-control-user {{ $errors->has('documento') ? ' is-invalid' : '' }}"
+                                         value="{{ old('documento') }}" id="documento" name="documento"  placeholder="Cedula socio" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                        @if ($errors->has('documento'))
                                             <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('codigo') }}</strong>
+                                                <strong>{{ $errors->first('documento') }}</strong>
                                             </span>
                                         @endif
                                     </div>

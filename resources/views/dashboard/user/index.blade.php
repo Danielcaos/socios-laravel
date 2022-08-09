@@ -20,17 +20,25 @@
                             <h6 class="m-0 font-weight-bold text-primary">Dias Restantes del Invitado</h6>
                         </div>
                         <div class="card-body">
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="number" class="form-control form-control-user" id="cedulai" name="cedulai"
-                                    placeholder="Cedula invitado" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                            <form class="user" action="{{ route('registro.consulta') }}" method="post">
+                            @csrf
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="number" class="form-control form-control-user {{ $errors->has('documento_invitado') ? ' is-invalid' : '' }}" id="documento_invitado" name="documento_invitado"
+                                        placeholder="Documento invitado" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('documento_invitado') }}">
+                                        @if ($errors->has('documento_invitado'))
+                                            <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('documento_invitado') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Consultar
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <button type="button" onclick="return ausente()" class="btn btn-primary btn-user btn-block">
-                                        Consultar
-                                    </button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <hr>

@@ -33,7 +33,7 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="email" class="form-control form-control-user" id="email" name="email"
-                                            placeholder="Email" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                            placeholder="Email">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="contraseña" name="contraseña"

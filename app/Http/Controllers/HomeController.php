@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use App\Models\User;
 use App\Models\Invitado;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('admin')) {
+            $usuarios = User::all();
             return view('dashboard.admin.index', compact('usuarios'));
         } else 
         if (auth()->user()->hasRole('user')) {

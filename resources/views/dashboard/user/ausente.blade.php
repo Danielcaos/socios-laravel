@@ -16,22 +16,38 @@
                     <hr>
                     <div class="card shadow align-items-center justify-content-between mb-4">
                         <div class="card-body" style="width: 50%;">
-                            <form class="user" id="datosAusente">
+                            <form class="user" action="{{ route('registro.ausente') }}" method="post" id="datosAusente">
+                            @csrf
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" class="form-control form-control-user" id="codigo" name="codigo"
-                                            placeholder="Codigo socio" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                        <input type="number" class="form-control form-control-user {{ $errors->has('cedula_ausente') ? ' is-invalid' : '' }}" id="codigo" name="cedula_ausente"
+                                            placeholder="Cedula ausente" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('cedula_ausente') }}">
+                                        @if ($errors->has('cedula_ausente'))
+                                        <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('cedula_ausente') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control form-control-user" id="dias" name="dias"
-                                            placeholder="Dias">
+                                        <input type="number" class="form-control form-control-user {{ $errors->has('dias_ausente') ? ' is-invalid' : '' }}" id="dias" name="dias_ausente"
+                                            placeholder="Dias" value="{{ old('dias_ausente') }}">
+                                        @if ($errors->has('dias_ausente'))
+                                        <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('dias_ausente') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="date" class="form-control form-control-user" id="fecha" name="fecha"
-                                        placeholder="Fecha">
+                                    <input type="date" class="form-control form-control-user {{ $errors->has('fecha_ausente') ? ' is-invalid' : '' }}" id="fecha" name="fecha_ausente"
+                                        placeholder="Fecha" value="{{ old('fecha_ausente') }}">
+                                    @if ($errors->has('fecha_ausente'))
+                                    <span style="margin-bottom:18px" class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('fecha_ausente') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-                                <button type="button" onclick="return ausente()" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Guardar
                                 </button>
                             </form>

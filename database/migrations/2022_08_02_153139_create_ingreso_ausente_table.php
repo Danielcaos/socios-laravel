@@ -15,8 +15,7 @@ class CreateIngresoAusenteTable extends Migration
     {
         Schema::create('ingreso_ausente', function (Blueprint $table) {
             $table->id();
-            $table->integer('cedula')->unique();
-            $table->string('codigo');
+            $table->integer('cedula');
             $table->integer('dias');
             $table->date('fecha');
             $table->unsignedBigInteger('usuario');
