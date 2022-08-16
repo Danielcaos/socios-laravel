@@ -36,7 +36,7 @@ class SociosImport implements ToModel, WithValidation, WithHeadingRow
     public function rules(): array
     {
         return [
-            'codigo' => 'required|unique:socios,codigo',
+            'codigo' => 'required',
             'nombre' => 'required',
         ];
     }
